@@ -1,16 +1,23 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Task;
 
 Route::get('/', function () {
-    return view('tasks');
+    return view('login');
 });
 
 
 Route::get('/tasks', [TaskController::class, 'index']);
 
+
+Route::get('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'loginPost'])->name("login.post");
+
+Route::get('/register', [AuthController::class, 'register']);
+Route::post('/register', [AuthController::class, 'registerPost'])->name("register.post");
 
 // 1- we need a new route
 // 2- controller for the logic of the view
