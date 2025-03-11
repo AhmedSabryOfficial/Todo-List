@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -11,15 +14,33 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('tasks');
+
+        $user = Auth::user();
+        $tasks = $user->tasks;
+        return view('tasks', compact('tasks'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255|string'
+        ]);
+
+
+        $title = $request->title;
+
+        $user = Auth::user();
+
+        $task = new Task([
+            'title' => $title,
+            'status' => false,
+            'user_id' => $user->id
+        ]);
+        $task->save();
+        return view('tasks');
     }
 
     /**

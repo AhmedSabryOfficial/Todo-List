@@ -4,11 +4,23 @@
 @section('content')
 
     <!-- Register Page -->
+
     <div class="min-h-screen flex items-center justify-center bg-gray-100">
         <div class="w-full max-w-md bg-white p-8 rounded shadow">
+            @if (session()->has('success'))
+                <div class="text-green-600 text-sm">
+                    {{ session()->get('success') }}
+                </div>
+            @endif
+            @if (session()->has('error'))
+                <div class="text-red-500 text-sm">
+                    {{ session()->get('error') }}
+                </div>
+            @endif
             <h2 class="text-2xl font-bold mb-6 text-center">إنشاء حساب</h2>
             <form action="{{ route('register.post') }}" method="POST">
                 @csrf
+
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700 mb-2">الاسم الكامل</label>
                     <input type="text" id="name" name="name"
